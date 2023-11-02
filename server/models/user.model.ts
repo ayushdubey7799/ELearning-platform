@@ -41,7 +41,6 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Please enter your password"],
       minlength: [6, "Password must be at least 6 characters"],
       select: false,
     },
@@ -63,7 +62,7 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true,  }
 );
 
 // Hash Password before saving
@@ -78,13 +77,17 @@ userSchema.pre<IUser>("save", async function (next) {
 
 // sign access token
 userSchema.methods.SignAccessToken = function () {
-    return jwt.sign({id: this._id},process.env.ACCESS_TOKEN || '');
+    return jwt.sign({id: this._id},process.env.ACCESS_TOKEN || '',{
+        expiresIn: "5m"
+    });
 }
 
 
 // sign refresh token
 userSchema.methods.SignRefreshToken = function () {
-    return jwt.sign({id: this._id},process.env.REFRESH_TOKEN || '');
+    return jwt.sign({id: this._id},process.env.REFRESH_TOKEN || '',{
+        expiresIn: "3d"
+    });
 }
 
 
@@ -99,3 +102,9 @@ userSchema.methods.comparePassword = async function (
 const userModel: Model<IUser> = mongoose.model("User", userSchema);
 
 export default userModel;
+
+
+
+/*
+password --> select : false --> will not appear in search queries
+*/

@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import ErrorMiddleware from "./middleware/error"
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route';
+import courseRouter from './routes/course.route';
 
 dotenv.config();
 
@@ -26,8 +27,10 @@ app.use(cors(
     }
 ));
 
-// routes
+//  
 app.use("/api/v1",userRouter);
+app.use("/api/v1",courseRouter);
+
 
 
 // tesitng api

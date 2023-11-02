@@ -26,7 +26,6 @@ const sendMail = async (options: EmailOptions):Promise<void> => {
     });
 
     const {email,subject,template,data} = options;
-
     // get the path to the email template file
     const templatePath = path.join(__dirname,'../mails',template);
 
@@ -42,6 +41,7 @@ const sendMail = async (options: EmailOptions):Promise<void> => {
     }
 
     await transporter.sendMail(mailOptions);
+
 }
 
 
