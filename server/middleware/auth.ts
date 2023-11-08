@@ -22,7 +22,7 @@ export const isAuthenticated = catchAsyncError(async(req: Request, res: Response
     if(!user){
         return next(new ErrorHandler("user not found", 400));
     }
-
+    
     req.user = JSON.parse(user);
     next();
 
